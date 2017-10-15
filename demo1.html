@@ -11,15 +11,6 @@
     <link rel="stylesheet" href='./css/3th-auth.css'>
     <link rel="stylesheet" href='./css/free-flex.css'>
     <title> Vue demo 1 </title>
-      <style>
-          .scale-enter-active {
-              transition: all .2s ease;
-          }
-          .scale-enter, .scale-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-              opacity: 0;
-              transform: scale(.8);
-          }
-      </style>
   </head>
   <body>
     <div id="app1">
@@ -52,20 +43,6 @@
             <button id="app1-next-btn" type="button" class="next-button" :class="{ active : ( account && password ) }"
                     @click="nextButtonClick" :disabled="!( account && password )"> 开始授权 </button>
         </div>
-        <!-- 弹出框 -->
-        <transition name="scale">
-            <div class="flex cross-center modal" v-if="modalShow">
-                <div class="modal-box">
-                    <div class="flex main-center modal-title">提示框</div>
-                    <div class="modal-body">
-                        <div style="text-align: center"> 要验证的帐号为 ： {{ account }} </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="app1-modal-btn" type="button" class="modal-button active" @click="modalButtonClick">确认</button>
-                    </div>
-                </div>
-            </div>
-        </transition>
     </div>
 
     <script type="text/javascript" src="./js/vue.min.js"></script>
@@ -81,10 +58,7 @@
             },
             methods: {
                 nextButtonClick : function () {
-                    this.modalShow = true ;
-                },
-                modalButtonClick : function () {
-                    this.modalShow = false ;
+                    alert( "account : " + this.account + "\npassword : " + this.password )
                 }
             }
         });
