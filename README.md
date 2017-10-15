@@ -9,5 +9,6 @@ A pure Vue demo project for newbie
 
 `<script type="text/javascript" src="./js/vue.min.js"></script> `
 
+相同的姿势，可能会让你亲切不少，
 
-希望大家学习愉快。
+快开始吧
