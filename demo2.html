@@ -138,10 +138,8 @@
                     this.modalShow = false ;
                 },
                 onSelected :function (event) {
-                    console.log(event.target.innerHTML);
                     this.city = event.target.innerHTML;
-                    this.cityPickerShow = !this.cityPickerShow  ;
-                    this.inputShow = !this.inputShow ;
+                    this.toggleView();
                 }
             }
         });
