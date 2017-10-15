@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="all">
+    <link rel="stylesheet" href='./css/3th-auth.css'>
+    <link rel="stylesheet" href='./css/free-flex.css'>
+    <title> Vue demo 2 </title>
+    <style>
+        .fade-enter-active {
+            transition: all .4s ease;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+            opacity: 0
+        }
+        .scale-enter-active {
+            transition: all .4s ease;
+        }
+        .scale-enter, .scale-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+            opacity: 0;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div id="app1">
+
+        <transition name="fade">
+            <div v-if="inputShow">
+                <!-- 顶部小贴士 -->
+                <div class="top-tips"> {{ tipsMsg }} </div>
+                <!-- 表单输入框 -->
+                <div class="input-wrapper">
+                    <div class="flex wrapper-item">
+                        <label class="flex2 item-name" for="account">手机号</label>
+                        <div class="flex4 item-input">
+                            <input id="account" type="tel" maxlength="11" placeholder="请输入手机号" v-model="account">
+                        </div>
+                    </div>
+                    <div class="flex wrapper-item">
+                        <label class="flex2 item-name" for="password">城市</label>
+                        <div class="flex4 item-input">
+                            <input id="city" type="text" placeholder="请输入城市" v-model="city" readonly @click="toggleView">
+                        </div>
+                        <div class="arrow_right"> > </div>
+                    </div>
+                    <div class="flex wrapper-item">
+                        <label class="flex2 item-name" for="password">密码</label>
+                        <div class="flex4 item-input">
+                            <input id="password" type="password" placeholder="输入授权密码" v-model="password">
+                        </div>
+                    </div>
+                </div>
+                <!-- 协议 -->
+                <div class="flex vertical-center license">
+
+                    <div class="checked"></div>
+                    <div class="text">我已阅读并同意</div>
+                    <div><a href="javascript:void(0);">《授权协议》</a></div>
+                </div>
+                <!-- 底部按钮 -->
+                <div class="bottom-button">
+                    <button id="app1-next-btn" type="button" class="next-button" :class="{ active : ( account && city && password ) }"
+                            @click="nextButtonClick" :disabled="!( account && city && password )"> 开始授权 </button>
+                </div>
+                <!-- 弹出框 -->
+                <transition name="scale">
+                    <div class="flex cross-center modal" v-if="modalShow">
+                        <div class="modal-box">
+                            <div class="flex main-center modal-title">提示框</div>
+                            <div class="modal-body">
+                                <div style="text-align: center"> 要验证的帐号为 ： {{ account }} </div>
+                                <div style="text-align: center"> 所在城市 ： {{ city }} </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="app1-modal-btn" type="button" class="modal-button active" @click="modalButtonClick">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
+            </div>
+        </transition>
+
+        <transition name="fade">
+            <div class="city-picker" v-if="cityPickerShow">
+                <div class="city">
+                    <div class="flex city-title">
+                        <div class="flex3 city-name">请选择城市</div>
+                        <div class="flex1 main-end data">
+                            <div class="flex1 main-center save-data"></div>
+                            <div class="arrow rotate">
+                                <div class="arrow_right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-col city-list show">
+                        <div data-index="0" class="flex cross-center city-name" @click="onSelected">北京</div>
+                        <div data-index="1" class="flex cross-center city-name" @click="onSelected">上海</div>
+                        <div data-index="2" class="flex cross-center city-name" @click="onSelected">杭州</div>
+                        <div data-index="3" class="flex cross-center city-name" @click="onSelected">深圳</div>
+                        <div data-index="4" class="flex cross-center city-name" @click="onSelected">成都</div>
+                        <!-- 城市列表 -->
+                    </div>
+                </div>
+            </div>
+        </transition>
+
+    </div>
+
+
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+  	<script>
+        var app1 = new Vue({
+            el: '#app1',
+            data: {
+                inputShow : true,
+                cityPickerShow : false,
+                modalShow : false,
+                tipsMsg : '我们不会保存您的帐号密码，仅采集与您信用相关的信息。您的信息受严密保护，不对外公开',
+                account : '',
+                city : '',
+                password : ''
+            },
+            methods: {
+                toggleView : function () {
+                    this.inputShow = !this.inputShow ;
+                    this.cityPickerShow = !this.cityPickerShow  ;
+                },
+                nextButtonClick : function () {
+                    this.modalShow = true ;
+                },
+                modalButtonClick : function () {
+                    this.modalShow = false ;
+                },
+                onSelected :function (event) {
+                    console.log(event.target.innerHTML);
+                    this.city = event.target.innerHTML;
+                    this.cityPickerShow = !this.cityPickerShow  ;
+                    this.inputShow = !this.inputShow ;
+                }
+            }
+        });
+	</script>
+  </body>
+</html>
