@@ -10,10 +10,10 @@
     <meta name="robots" content="all">
     <link rel="stylesheet" href='./css/3th-auth.css'>
     <link rel="stylesheet" href='./css/free-flex.css'>
-    <title> Vue demo 2 </title>
+    <title> Vue demo 2（基础二） </title>
     <style>
         .fade-enter-active {
-            transition: all .4s ease;
+            transition: all .2s ease;
         }
         .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
             opacity: 0
@@ -23,6 +23,7 @@
         }
         .scale-enter, .scale-leave-to /* .fade-leave-active in below version 2.1.8 */ {
             opacity: 0;
+            transform: scale(0.96);
         }
     </style>
   </head>
@@ -31,7 +32,7 @@
     <div id="app1">
 
         <transition name="fade">
-            <div v-if="inputShow">
+            <div id="input-wrapper" v-if="inputShow">
                 <!-- 顶部小贴士 -->
                 <div class="top-tips"> {{ tipsMsg }} </div>
                 <!-- 表单输入框 -->
@@ -68,26 +69,11 @@
                     <button id="app1-next-btn" type="button" class="next-button" :class="{ active : ( account && city && password ) }"
                             @click="nextButtonClick" :disabled="!( account && city && password )"> 开始授权 </button>
                 </div>
-                <!-- 弹出框 -->
-                <transition name="scale">
-                    <div class="flex cross-center modal" v-if="modalShow">
-                        <div class="modal-box">
-                            <div class="flex main-center modal-title">提示框</div>
-                            <div class="modal-body">
-                                <div style="text-align: center"> 要验证的帐号为 ： {{ account }} </div>
-                                <div style="text-align: center"> 所在城市 ： {{ city }} </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="app1-modal-btn" type="button" class="modal-button active" @click="modalButtonClick">确认</button>
-                            </div>
-                        </div>
-                    </div>
-                </transition>
             </div>
         </transition>
 
         <transition name="fade">
-            <div class="city-picker" v-if="cityPickerShow">
+            <div id="city-picker" class="city-picker" v-if="cityPickerShow">
                 <div class="city">
                     <div class="flex city-title">
                         <div class="flex3 city-name">请选择城市</div>
@@ -99,22 +85,39 @@
                         </div>
                     </div>
                     <div class="flex-col city-list show">
-                        <div data-index="0" class="flex cross-center city-name" @click="onSelected">北京</div>
-                        <div data-index="1" class="flex cross-center city-name" @click="onSelected">上海</div>
-                        <div data-index="2" class="flex cross-center city-name" @click="onSelected">杭州</div>
-                        <div data-index="3" class="flex cross-center city-name" @click="onSelected">深圳</div>
-                        <div data-index="4" class="flex cross-center city-name" @click="onSelected">成都</div>
                         <!-- 城市列表 -->
+                        <div class="flex cross-center city-name" v-for="(item,index) in cityList" :key="item.id" @click="onSelected(item)">
+                            {{item.cityName}}
+                        </div>
                     </div>
                 </div>
             </div>
         </transition>
 
+        <!-- 弹出框 -->
+        <transition name="scale">
+            <div class="flex cross-center modal" v-if="modalShow">
+                <div class="modal-box">
+                    <div class="flex main-center modal-title">提示框</div>
+                    <div class="modal-body">
+                        <div style="text-align: center"> 要验证的帐号为 ： {{ account }} </div>
+                        <div style="text-align: center"> 所在城市 ： {{ city }} </div>
+   <!--                     <div> 勾选"我已阅读并同意"说明你已经阅读了《授权协议》并开始进行授权操作 </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button id="app1-modal-btn" type="button" class="modal-button active" @click="modalButtonClick">确认</button>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
+
     </div>
 
 
-    <script type="text/javascript" src="./js/vue.min.js"></script>
-  	<script>
+    <script src="./js/vue.min.js"></script>
+  	<script type="text/javascript">
+
         var app1 = new Vue({
             el: '#app1',
             data: {
@@ -122,14 +125,21 @@
                 cityPickerShow : false,
                 modalShow : false,
                 tipsMsg : '我们不会保存您的帐号密码，仅采集与您信用相关的信息。您的信息受严密保护，不对外公开',
+                cityList : [
+                    { cityName : '北京' },
+                    { cityName : '上海' },
+                    { cityName : '杭州' },
+                    { cityName : '深圳' },
+                    { cityName : '成都' }
+                ],
                 account : '',
                 city : '',
                 password : ''
             },
             methods: {
                 toggleView : function () {
-                    this.inputShow = !this.inputShow ;
-                    this.cityPickerShow = !this.cityPickerShow  ;
+                    this.cityPickerShow = !this.cityPickerShow;
+                    this.inputShow = !this.inputShow;
                 },
                 nextButtonClick : function () {
                     this.modalShow = true ;
@@ -137,8 +147,8 @@
                 modalButtonClick : function () {
                     this.modalShow = false ;
                 },
-                onSelected :function (event) {
-                    this.city = event.target.innerHTML;
+                onSelected :function (item) {
+                    this.city = item.cityName;
                     this.toggleView();
                 }
             }
