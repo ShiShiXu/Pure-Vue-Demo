@@ -193,6 +193,7 @@ body {
     width: 100%;
     min-height: 110px;
     max-height: 300px;
+    color: #666;
     overflow-y: scroll;
     padding: 20px 10px 40px;
     background-color: #f0f5f5;
