@@ -98,11 +98,10 @@
         <transition name="scale">
             <div class="flex cross-center modal" v-if="modalShow">
                 <div class="modal-box">
-                    <div class="flex main-center modal-title">提示框</div>
+                    <div class="flex main-center modal-title">提示</div>
                     <div class="modal-body">
                         <div style="text-align: center"> 要验证的帐号为 ： {{ account }} </div>
                         <div style="text-align: center"> 所在城市 ： {{ city }} </div>
-   <!--                     <div> 勾选"我已阅读并同意"说明你已经阅读了《授权协议》并开始进行授权操作 </div>-->
                     </div>
                     <div class="modal-footer">
                         <button id="app1-modal-btn" type="button" class="modal-button active" @click="modalButtonClick">确认</button>
