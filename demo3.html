@@ -10,7 +10,7 @@
     <meta name="robots" content="all">
     <link rel="stylesheet" href='./css/3th-auth.css'>
     <link rel="stylesheet" href='./css/free-flex.css'>
-    <title> Vue demo 2（组件） </title>
+    <title> Vue demo 3（组件） </title>
     <style>
         .fade-enter-active {
             transition: all .2s ease;
@@ -70,9 +70,6 @@
                             @click="nextButtonClick" :disabled="!( account && city && password )"> 开始授权 </button>
                 </div>
 
-				<modal></modal>
-
-
             </div>
         </transition>
 
@@ -98,49 +95,28 @@
             </div>
         </transition>
 
-        <!-- 弹出框 -->
-        <transition name="scale">
-
-        </transition>
+		<!-- 弹出框 -->
+		<transition name="scale">
+			<div class="modal-wrapper" v-if="modalShow">
+				<modal :modal-msg="modalMsg" v-on:modal-click="modalClickAnswer"></modal>
+			</div>
+		</transition>
 
     </div>
 
 
     <script src="./js/vue.min.js"></script>
+    <script src="./js/component.js"></script>
   	<script type="text/javascript">
 
-		// 注册
-		Vue.component('modal', {
-		    data : function () {
-                return {
-                    modalShow : false
-				}
-            },
-			methods : {
-                modalButtonClick : function () {
-                    this.modalShow = false ;
-                }
-			},
-			template: '<div class="flex cross-center modal" v-if="modalShow">'+
-                '<div class="modal-box">'+
-                '<div class="flex main-center modal-title">提示框</div>'+
-                '<div class="modal-body">'+
-                '<div> 勾选"我已阅读并同意"说明你已经阅读了《授权协议》并开始进行授权操作 </div>'+
-                '</div>'+
-                '<div class="modal-footer">'+
-                '<button id="app1-modal-btn" type="button" class="modal-button active" @click="modalButtonClick">确认</button>'+
-                '</div>'+
-                '</div>'+
-                '</div>'
-		});
-
-
-		var app1 = new Vue({
+	var app1 =
+    	new Vue({
             el: '#app1',
             data: {
                 inputShow : true,
                 cityPickerShow : false,
                 modalShow : false,
+                modalMsg : "点击“开始授权”意味着您已经阅读并同意《授权协议》里面的各项内容，并开始授权。点击确认按钮继续。",
                 tipsMsg : '我们不会保存您的帐号密码，仅采集与您信用相关的信息。您的信息受严密保护，不对外公开',
                 cityList : [
                     { cityName : '北京' },
@@ -164,13 +140,12 @@
                 onSelected :function (item) {
                     this.city = item.cityName;
                     this.toggleView();
+                },
+                modalClickAnswer : function (data) {
+                    this.modalShow = false ;
                 }
             }
         });
-
-
-
-
 
 
 	</script>
