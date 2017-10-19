@@ -128,6 +128,10 @@ body {
     color: #43baae;
 }
 
+#app1 .license a:focus {
+    outline: none;
+}
+
 
 #app1 .bottom-button {
     position: relative;
