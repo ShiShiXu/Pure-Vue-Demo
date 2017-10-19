@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="all">
+    <link rel="stylesheet" href='./css/3th-auth.css'>
+    <link rel="stylesheet" href='./css/free-flex.css'>
+    <title> Vue demo 4（生命周期） </title>
+    <style>
+        .fade-enter-active {
+            transition: all .2s ease;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+            opacity: 0;
+        }
+        .scale-enter-active {
+            transition: all .4s ease;
+        }
+        .scale-enter, .scale-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+    </style>
+  </head>
+  <body>
+
+    <div id="app1">
+
+        <transition name="fade">
+            <div id="input-wrapper" v-if="inputShow">
+                <!-- 顶部小贴士 -->
+                <div class="top-tips"> {{ tipsMsg }} </div>
+                <!-- 表单输入框 -->
+                <div class="input-wrapper">
+                    <div class="flex wrapper-item">
+                        <label class="flex2 item-name" for="account">手机号</label>
+                        <div class="flex4 item-input">
+                            <input id="account" type="tel" maxlength="11" placeholder="请输入手机号" v-model="account">
+                        </div>
+                    </div>
+                    <div class="flex wrapper-item">
+                        <label class="flex2 item-name" for="password">城市</label>
+                        <div class="flex4 item-input">
+                            <input id="city" type="text" placeholder="请输入城市" v-model="city" readonly @click="toggleView">
+                        </div>
+                        <div class="arrow_right"> > </div>
+                    </div>
+                    <div class="flex wrapper-item">
+                        <label class="flex2 item-name" for="password">密码</label>
+                        <div class="flex4 item-input">
+                            <input id="password" type="password" placeholder="输入授权密码" v-model="password">
+                        </div>
+                    </div>
+                </div>
+                <!-- 协议 -->
+                <div class="flex vertical-center license">
+
+                    <div class="checked"></div>
+                    <div class="text">我已阅读并同意</div>
+                    <div><a href="javascript:void(0);" @click="showLicense">《授权协议》</a></div>
+                </div>
+                <!-- 底部按钮 -->
+                <div class="bottom-button">
+                    <button id="app1-next-btn" type="button" class="next-button" :class="{ active : ( account && city && password ) }"
+                            @click="nextButtonClick" :disabled="!( account && city && password )"> 开始授权 </button>
+                </div>
+
+            </div>
+        </transition>
+
+        <transition name="fade">
+            <div id="city-picker" class="city-picker" v-if="cityPickerShow">
+                <div class="city">
+                    <div class="flex city-title">
+                        <div class="flex3 city-name">请选择城市</div>
+                        <div class="flex1 main-end data">
+                            <div class="flex1 main-center save-data"></div>
+                            <div class="arrow rotate">
+                                <div class="arrow_right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-col city-list show">
+                        <!-- 城市列表 -->
+                        <div class="flex cross-center city-name" v-for="(item,index) in cityList2" :key="item.id"
+							 @click="onSelected(item)">
+							{{item.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
+		<!-- 弹出框 -->
+		<transition name="scale">
+			<div class="modal-wrapper" v-if="modalShow">
+				<modal :modal-msg="modalMsg" :modal-title="modalTitle" v-on:modal-click="modalClickAnswer"></modal>
+			</div>
+		</transition>
+
+    </div>
+
+
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/component.js"></script>
+  	<script type="text/javascript">
+
+	var app1 =
+    	new Vue({
+            el: '#app1',
+            data: {
+                inputShow : true,
+                cityPickerShow : false,
+                modalShow : false,
+                modalTitle : '',
+                modalMsg : "",
+                tipsMsg : '我们不会保存您的帐号密码，仅采集与您信用相关的信息。您的信息受严密保护，不对外公开',
+                cityList  : [
+                    { cityName : '北京' },
+                    { cityName : '上海' },
+                    { cityName : '杭州' },
+                    { cityName : '深圳' },
+                    { cityName : '成都' }
+                ],
+                cityList2 : undefined,
+                account : '',
+                city : '',
+                password : ''
+            },
+            methods: {
+                toggleView : function () { // 打开城市选择界面
+                    this.cityPickerShow = !this.cityPickerShow;
+                    this.inputShow = !this.inputShow;
+                },
+                onSelected :function (item) { // 选择城市后将数据保存到cityName，然后切换回到主页
+                    this.city = item.cityName;
+                    this.toggleView();
+                },
+				showLicense : function () { // 点击《授权协议》
+					this.modalTitle = "服务条款";
+					this.modalMsg =  "感谢您授权平台提供的授权服务。请您在使用授权平台时，仔细阅读并完全理解本服务条款的全部内容。" +
+						"本条款是授权平台的必要组成部分，如您不同意本服务条款的任意内容，请勿使用本平台的借款服务。如您通过网络页面点击" +
+						"确认或以其他方式选择接受本条款，即表示您已阅读和完全理解了本服务条款，并自愿接受本服务条款的全部内容。balabala .....   ";
+					this.modalShow = true ;
+				},
+                nextButtonClick : function () { // 点击开始授权按钮
+                    this.modalTitle = "提示框";
+                    this.modalMsg =  "点击“开始授权”意味着您已经阅读并同意《授权协议》里面的各项内容，并开始授权。点击确认按钮继续。";
+                    this.modalShow = true ;
+                },
+                modalClickAnswer : function (data) { // 响应组件的呼喊
+                    this.modalShow = false ;
+                }
+            },
+            created: function () {
+                var _this = this ;
+                axios({
+                    method: 'post',
+                    url: './js/getAllCities.json',
+                    params: {
+                    }
+                }).then( function (response) {
+                    _this.cityList2 = response.data.result.cityList;
+                    console.log(_this.cityList2);
+                }).catch( function (error) {
+                    console.log(error);
+                });
+
+
+            },
+            mounted: function () {}
+        });
+
+
+
+
+
+
+	</script>
+  </body>
+</html>
