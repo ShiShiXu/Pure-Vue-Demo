@@ -62,7 +62,7 @@
 
                     <div class="checked"></div>
                     <div class="text">我已阅读并同意</div>
-                    <div><a href="javascript:void(0);">《授权协议》</a></div>
+                    <div><a href="javascript:void(0);" @click="showLicense">《授权协议》</a></div>
                 </div>
                 <!-- 底部按钮 -->
                 <div class="bottom-button">
@@ -98,7 +98,7 @@
 		<!-- 弹出框 -->
 		<transition name="scale">
 			<div class="modal-wrapper" v-if="modalShow">
-				<modal :modal-msg="modalMsg" v-on:modal-click="modalClickAnswer"></modal>
+				<modal :modal-msg="modalMsg" :modal-title="modalTitle" v-on:modal-click="modalClickAnswer"></modal>
 			</div>
 		</transition>
 
@@ -116,7 +116,8 @@
                 inputShow : true,
                 cityPickerShow : false,
                 modalShow : false,
-                modalMsg : "点击“开始授权”意味着您已经阅读并同意《授权协议》里面的各项内容，并开始授权。点击确认按钮继续。",
+                modalTitle : '',
+                modalMsg : "",
                 tipsMsg : '我们不会保存您的帐号密码，仅采集与您信用相关的信息。您的信息受严密保护，不对外公开',
                 cityList : [
                     { cityName : '北京' },
@@ -135,14 +136,24 @@
                     this.inputShow = !this.inputShow;
                 },
                 nextButtonClick : function () {
+                    this.modalTitle = "提示框";
+                    this.modalMsg =  "点击“开始授权”意味着您已经阅读并同意《授权协议》里面的各项内容，并开始授权。点击确认按钮继续。";
                     this.modalShow = true ;
                 },
+
                 onSelected :function (item) {
                     this.city = item.cityName;
                     this.toggleView();
                 },
                 modalClickAnswer : function (data) {
                     this.modalShow = false ;
+                },
+                showLicense : function () {
+                    this.modalTitle = "服务条款";
+                    this.modalMsg =  "感谢您授权平台提供的授权服务。请您在使用授权平台时，仔细阅读并完全理解本服务条款的全部内容。" +
+						"本条款是授权平台的必要组成部分，如您不同意本服务条款的任意内容，请勿使用本平台的借款服务。如您通过网络页面点击" +
+						"确认或以其他方式选择接受本条款，即表示您已阅读和完全理解了本服务条款，并自愿接受本服务条款的全部内容。balabala .....   ";
+                    this.modalShow = true ;
                 }
             }
         });
