@@ -87,9 +87,9 @@
                     </div>
                     <div class="flex-col city-list show">
                         <!-- 城市列表 -->
-                        <div class="flex cross-center city-name" v-for="(item,index) in cityList2" :key="item.id"
+                        <div class="flex cross-center city-name" v-for="(item,index) in cityList" :key="item.id"
 							 @click="onSelected(item)">
-							{{item.name}}
+							{{item.cityName}}
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,6 @@
                     { cityName : '深圳' },
                     { cityName : '成都' }
                 ],
-                cityList2 : undefined,
                 account : '',
                 city : '',
                 password : ''
@@ -142,13 +141,13 @@
                     this.city = item.cityName;
                     this.toggleView();
                 },
-				showLicense : function () { // 点击《授权协议》
-					this.modalTitle = "服务条款";
-					this.modalMsg =  "感谢您授权平台提供的授权服务。请您在使用授权平台时，仔细阅读并完全理解本服务条款的全部内容。" +
-						"本条款是授权平台的必要组成部分，如您不同意本服务条款的任意内容，请勿使用本平台的借款服务。如您通过网络页面点击" +
-						"确认或以其他方式选择接受本条款，即表示您已阅读和完全理解了本服务条款，并自愿接受本服务条款的全部内容。balabala .....   ";
-					this.modalShow = true ;
-				},
+        				showLicense : function () { // 点击《授权协议》
+        					this.modalTitle = "服务条款";
+        					this.modalMsg =  "感谢您授权平台提供的授权服务。请您在使用授权平台时，仔细阅读并完全理解本服务条款的全部内容。" +
+        						"本条款是授权平台的必要组成部分，如您不同意本服务条款的任意内容，请勿使用本平台的服务。如您通过网络页面点击" +
+        						"确认或以其他方式选择接受本条款，即表示您已阅读和完全理解了本服务条款，并自愿接受本服务条款的全部内容。balabala .....   ";
+        					this.modalShow = true ;
+        				},
                 nextButtonClick : function () { // 点击开始授权按钮
                     this.modalTitle = "提示框";
                     this.modalMsg =  "点击“开始授权”意味着您已经阅读并同意《授权协议》里面的各项内容，并开始授权。点击确认按钮继续。";
@@ -158,23 +157,41 @@
                     this.modalShow = false ;
                 }
             },
-            created: function () {
-                var _this = this ;
-                axios({
-                    method: 'post',
-                    url: './js/getAllCities.json',
-                    params: {
-                    }
-                }).then( function (response) {
-                    _this.cityList2 = response.data.result.cityList;
-                    console.log(_this.cityList2);
-                }).catch( function (error) {
-                    console.log(error);
-                });
-
-
+            beforeCreate : function() {
+                /* 在实例初始化之后，数据观测 (data observer) 和
+                 event/watcher 事件配置之前被调用。 */
+                console.log("created 之前");
             },
-            mounted: function () {}
+            created : function() { //在实例创建完成后被立即调用。
+                console.log("已经 created");
+            },
+            beforeMount : function() { //在挂载开始之前被调用：相关的 render 函数首次被调用。
+                console.log("beforeMount 之前");
+            },
+            mounted : function() { //el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。
+                console.log("已经 mounted");
+            },
+            beforeUpdate : function() { //数据更新时调用，发生在虚拟 DOM 重新渲染和打补丁之前。
+                console.log("update 之前");
+            },
+            updated : function() { //由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。
+                this.$nextTick(function () {
+                    // Code that will run only after the entire view has been re-rendered
+                    console.log("已经 update");
+                });
+            },
+            activated : function() { //keep-alive 组件激活时调用。
+                console.log("已经 activated");
+            },
+            deactivated : function() { //keep-alive 组件停用时调用。
+                console.log("beforeMount 之前");
+            },
+            beforeDestroy : function() { //实例销毁之前调用。在这一步，实例仍然完全可用。
+                console.log("beforeMount 之前");
+            },
+            destroyed : function() { //Vue 实例销毁后调用。
+                console.log("已经 destroyed");
+            }
         });
 
 
