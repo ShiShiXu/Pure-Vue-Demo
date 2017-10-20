@@ -75,21 +75,21 @@
 
         <transition name="fade">
             <div id="city-picker" class="city-picker" v-if="cityPickerShow">
-                <div class="city">
+                <div class="city"  v-for="(item,index) in cityList" :key="item.id">
                     <div class="flex city-title">
-                        <div class="flex3 city-name">请选择城市</div>
+                        <div class="flex3 city-name"> {{item.name}} </div>
                         <div class="flex1 main-end data">
                             <div class="flex1 main-center save-data"></div>
                             <div class="arrow rotate">
-                                <div class="arrow_right"></div>
+                                <div class="arrow_right"> </div>
                             </div>
                         </div>
                     </div>
                     <div class="flex-col city-list show">
                         <!-- 城市列表 -->
-                        <div class="flex cross-center city-name" v-for="(item,index) in cityList" :key="item.id"
+                        <div class="flex cross-center city-name" v-for="(item,index) in item.sub" :key="item.id"
 							 @click="onSelected(item)">
-							{{item.sub[0].name}}
+							{{ item.name }}
                         </div>
                     </div>
                 </div>
@@ -111,8 +111,27 @@
     <script src="./js/component.js"></script>
   	<script type="text/javascript">
 
-	var app1 =
-    	new Vue({
+		axios.interceptors.request.use( function(config) {     // 请求拦截器， 每当发送请求就显示动画
+			//在发送请求之前做某事
+            alert("即将请求数据...");
+			return config;
+		}, function(error) {
+			//请求错误时做些事
+            alert("请求数据时发生错误");
+			return Promise.reject(error);
+		});
+
+		axios.interceptors.response.use( function(response) { // 响应拦截器， 当有数据响应就关闭动画
+			//对响应数据做些事
+            alert("请求数据完毕");
+			return response;
+		}, function(error) {
+			//请求错误时做些事
+            alert("请求数据完毕时发生错误");
+			return Promise.reject(error);
+		});
+
+		var app1 = new Vue({
             el: '#app1',
             data: {
                 inputShow : true,
@@ -132,7 +151,7 @@
                     this.inputShow = !this.inputShow;
                 },
                 onSelected :function (item) { // 选择城市后将数据保存到cityName，然后切换回到主页
-                    this.city = item.cityName;
+                    this.city = item.name;
                     this.toggleView();
                 },
 				showLicense : function () { // 点击《授权协议》
@@ -155,22 +174,15 @@
                 var _this = this ;
                 axios({
                     method: 'post',
-                    url: './js/getAllCities.json',
-                    params: {
-                    }
+                    url: './js/getAllCities.json'
                 }).then( function (response) {
                     _this.cityList = response.data.result.cityList;
-                    console.log(_this.cityList);
                 }).catch( function (error) {
                     console.log(error);
                 });
             },
             mounted: function () {}
         });
-
-
-
-
 
 
 	</script>
