@@ -31,6 +31,8 @@
 
     <div id="app1">
 
+
+
         <transition name="fade">
             <div id="input-wrapper" v-if="inputShow">
                 <!-- 顶部小贴士 -->
@@ -98,9 +100,9 @@
 
 		<!-- 弹出框 -->
 		<transition name="scale">
-			<div class="modal-wrapper" v-if="modalShow">
-				<modal :modal-msg="modalMsg" :modal-title="modalTitle" v-on:modal-click="modalClickAnswer"></modal>
-			</div>
+				<div class="modal-wrapper" v-if="modalShow">
+					<modal :modal-msg="modalMsg" :modal-title="modalTitle" v-on:modal-click="modalClickAnswer"></modal>
+				</div>
 		</transition>
 
     </div>
@@ -177,27 +179,22 @@
             updated : function() { //由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。
                 this.$nextTick(function () {
                     // Code that will run only after the entire view has been re-rendered
-                    console.log("已经 update");
+                    console.log("已经 updated");
                 });
             },
             activated : function() { //keep-alive 组件激活时调用。
-                console.log("已经 activated");
+                console.log("activated");
             },
             deactivated : function() { //keep-alive 组件停用时调用。
-                console.log("beforeMount 之前");
+                console.log("deactivated");
             },
             beforeDestroy : function() { //实例销毁之前调用。在这一步，实例仍然完全可用。
-                console.log("beforeMount 之前");
+                console.log("beforeDestroy");
             },
             destroyed : function() { //Vue 实例销毁后调用。
-                console.log("已经 destroyed");
+                console.log("destroyed");
             }
         });
-
-
-
-
-
 
 	</script>
   </body>
