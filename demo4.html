@@ -172,6 +172,8 @@
             },
             mounted : function() { //el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。
                 console.log("已经 mounted");
+/*                var app1Btn = document.getElementById('app1-next-btn');
+                app1Btn.innerHTML = '??'*/
             },
             beforeUpdate : function() { //数据更新时调用，发生在虚拟 DOM 重新渲染和打补丁之前。
                 console.log("update 之前");
