@@ -46,7 +46,7 @@
                     <div class="flex wrapper-item">
                         <label class="flex2 item-name" for="password">城市</label>
                         <div class="flex4 item-input">
-                            <input id="city" type="text" placeholder="请输入城市" v-model="city" readonly @click="toggleView">
+                            <input id="city" type="text" placeholder="请选择城市" v-model="city" readonly @click="toggleView">
                         </div>
                         <div class="arrow_right"> > </div>
                     </div>
@@ -72,6 +72,7 @@
             </div>
         </transition>
 
+        <!-- 城市选择界面 -->
         <transition name="fade">
             <div id="city-picker" class="city-picker" v-if="cityPickerShow">
                 <div class="city">
@@ -110,13 +111,10 @@
             </div>
         </transition>
 
-
     </div>
-
 
     <script src="./js/vue.js"></script>
   	<script type="text/javascript">
-
         var app1 = new Vue({
             el: '#app1',
             data: {
