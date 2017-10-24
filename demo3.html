@@ -12,19 +12,19 @@
     <link rel="stylesheet" href='./css/free-flex.css'>
     <title> Vue demo 3（组件） </title>
     <style>
-        .fade-enter-active {
-            transition: all .2s ease;
-        }
-        .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-            opacity: 0
-        }
-        .scale-enter-active {
-            transition: all .4s ease;
-        }
-        .scale-enter, .scale-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-            opacity: 0;
-            transform: scale(0.96);
-        }
+        .fade-enter-active, .fade-leave-active {
+			transition: all .2s ease;
+		}
+		.fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+			opacity: 0
+		}
+		.scale-enter-active, .scale-leave-active  {
+			transition: all .4s ease;
+		}
+		.scale-enter, .scale-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+			opacity: 0;
+			transform: scale(0.96);
+		}
     </style>
   </head>
   <body>
