@@ -98,9 +98,7 @@
 
 		<!-- 弹出框 -->
 		<transition name="scale">
-			<div class="modal-wrapper" v-if="modalShow">
-				<modal :modal-msg="modalMsg" :modal-title="modalTitle" v-on:modal-click="modalClickAnswer"></modal>
-			</div>
+		    <modal v-if="modalShow" :modal-msg="modalMsg" :modal-title="modalTitle" v-on:modal-click="modalClickAnswer"></modal>
 		</transition>
 
     </div>
