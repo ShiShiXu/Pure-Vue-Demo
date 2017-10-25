@@ -109,7 +109,7 @@
     <script src="./js/component.js"></script>
   	<script type="text/javascript">
 
-		axios.interceptors.request.use( function(config) { // 请求拦截器， 每当发送请求就做些事情
+		axios.interceptors.request.use( function(config) { // 请求拦截器，每当发送请求就做些事情
 			//在发送请求之前做某事
             alert("即将请求数据...");
 			return config;
@@ -119,7 +119,7 @@
 			return Promise.reject(error);
 		});
 
-		axios.interceptors.response.use( function(response) { // 响应拦截器， 当有数据响应就做些事情
+		axios.interceptors.response.use( function(response) { // 响应拦截器，当有数据响应就做些事情
 			//对响应数据做些事
             alert("请求数据完毕");
 			return response;
