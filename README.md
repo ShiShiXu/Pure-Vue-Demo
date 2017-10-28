@@ -20,3 +20,6 @@ Pure Vue demo 这系列的教程会致力于最原始的 Vue.js 讲解，让初�
 快开始吧
 
 文件入口： [Pure-Vue-Demo](https://shishixu.github.io/Pure-Vue-Demo/index.html)
+
+
+首发教程： [明灯小站：Vue.js 教程](https://www.mingtern.com/lesson/767952/)
