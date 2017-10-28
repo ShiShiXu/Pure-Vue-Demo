@@ -49,6 +49,13 @@ body {
     right: 0;
 }
 
+#input-wrapper {
+    z-index: 10;
+}
+#city-picker {
+    z-index: 9;
+}
+
 .top-tips {
   padding: 16px 16px 10px;
   color: #666;
