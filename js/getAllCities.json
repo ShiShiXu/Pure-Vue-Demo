@@ -7,16 +7,6 @@
         "id": "c44664fa07ba409db77d4a88b0a60e24",
         "sub": [
           {
-            "id": "59186b57c9fc4ecfbfd86527bceb43dd",
-            "sub": [],
-            "category": "social_insurance",
-            "level": "2",
-            "status": "1",
-            "name": "广东省直社保",
-            "fullcode": "00445800",
-            "code": "5800"
-          },
-          {
             "id": "dc6e725b0c6a4bdb9a55e67f9d150678",
             "sub": [],
             "category": "social_insurance",
@@ -346,16 +336,6 @@
             "name": "贺州",
             "fullcode": "00456225",
             "code": "6225"
-          },
-          {
-            "id": "c7eb6e076c28458ab31cc4c1cff3f45e",
-            "sub": [],
-            "category": "social_insurance",
-            "level": "2",
-            "status": "1",
-            "name": "广西省省直社保",
-            "fullcode": "00454501",
-            "code": "4501"
           }
         ],
         "category": "social_insurance",

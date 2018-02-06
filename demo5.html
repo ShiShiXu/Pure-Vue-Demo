@@ -10,6 +10,7 @@
     <meta name="robots" content="all">
     <link rel="stylesheet" href='./css/3th-auth.css'>
     <link rel="stylesheet" href='./css/free-flex.css'>
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
     <title> Vue demo 5（数据获取） </title>
     <style>
 		[v-cloak] {
@@ -174,7 +175,7 @@
             created: function () {
                 var _this = this ;
                 axios({
-                    method: 'post',
+                    method: 'get',
                     url: './js/getAllCities.json'
                 }).then( function (response) {
                     console.log(response);
