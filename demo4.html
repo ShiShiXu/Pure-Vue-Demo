@@ -12,6 +12,9 @@
     <link rel="stylesheet" href='./css/free-flex.css'>
     <title> Vue demo 4（生命周期） </title>
     <style>
+		[v-cloak] {
+			display: none;
+		}
         .fade-enter-active, .fade-leave-active {
 			transition: all .2s ease;
 		}
@@ -29,7 +32,7 @@
   </head>
   <body>
 
-    <div id="app1">
+    <div id="app1" v-cloak>
 
         <transition name="fade">
             <div id="input-wrapper" v-if="inputShow">
@@ -185,6 +188,7 @@
                 },
                 destroyed : function() { //Vue 实例销毁后调用。
                     console.log("destroyed");
+
                 }
             });
 

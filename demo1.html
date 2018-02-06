@@ -11,9 +11,14 @@
     <link rel="stylesheet" href='./css/3th-auth.css'>
     <link rel="stylesheet" href='./css/free-flex.css'>
     <title> Vue demo 1（基础一） </title>
+	<style>
+		[v-cloak] {
+			display: none;
+		}
+	</style>
   </head>
   <body>
-    <div id="app1">
+    <div id="app1" v-cloak>
         <!-- 顶部小贴士 -->
         <div class="top-tips"> {{ tipsMsg }} </div>
         <!-- 表单输入框 -->
@@ -43,6 +48,7 @@
             <button id="app1-next-btn" type="button" class="next-button" :class="{ active : ( account && password ) }"
                     @click="nextButtonClick" :disabled="!( account && password )"> 开始授权 </button>
         </div>
+
     </div>
 
     <script src="./js/vue.js"></script>

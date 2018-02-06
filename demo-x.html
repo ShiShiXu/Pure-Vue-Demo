@@ -12,14 +12,15 @@
     <link rel="stylesheet" href='css/free-flex.css'>
     <title> Vue demo X </title>
     <style>
-
+		[v-cloak] {
+			display: none;
+		}
         .fade-enter-active, .fade-leave-active {
             transition: all .4s ease;
         }
         .fade-enter, .fade-leave-to {
             opacity: 0;
         }
-
         .slideTop-enter-active, .slideTop-leave-active {
             transition: all .4s ease;
         }
@@ -27,7 +28,6 @@
             opacity: 0;
             transform: translateY(-32px);
         }
-
         .scale-enter-active {
             transition: all .2s ease;
         }
@@ -35,14 +35,11 @@
             opacity: 0;
             transform: scale(.92);
         }
-
-
     </style>
   </head>
   <body>
 
-  <keep-alive>
-    <div id="app1" v-if="show">
+    <div id="app1" v-if="show" v-cloak>
 
         <!-- 顶部小贴士 -->
         <div class="top-tips">我们不会保存您的帐号密码，仅采集与您信用相关的信息。您的信息受严密保护，不对外公开</div>
@@ -51,13 +48,13 @@
             <div class="flex wrapper-item">
                 <label class="flex2 item-name" for="account">帐号/手机号</label>
                 <div class="flex4 item-input">
-                    <input id="account" type="tel" maxlength="11" placeholder="帐号/手机号" v-model="account" autofocus>
+                    <input id="account" type="tel" maxlength="11" placeholder="帐号/手机号" autofocus>
                 </div>
             </div>
             <div class="flex wrapper-item">
                 <label class="flex1 item-name" for="password">密码</label>
                 <div class="flex4 item-input">
-                    <input id="password" type="password" placeholder="输入授权密码" v-model="password">
+                    <input id="password" type="password" placeholder="输入授权密码">
                 </div>
             </div>
         </div>
@@ -69,72 +66,91 @@
         </div>
         <!-- 底部按钮 -->
         <div class="bottom-button">
-            <button id="app1-next-btn" type="button" class="next-button" :class="{ active : ( account && password ) }"
-                   @click="nextButtonClick" :disabled="!( account && password )"> 开始授权 </button>
+            <button id="app1-next-btn" type="button" class="next-button"> 开始授权 </button>
         </div>
 
-
-        <transition name="scale">
-            <app1-modal ref="app1ModalHook"></app1-modal>
-        </transition>
-
-        <transition name="slideTop">
-            <tips ref="tipsHook"></tips>
-        </transition>
-
     </div>
-      </keep-alive>
     <script type="text/javascript" src="js/vue.min.js"></script>
     <script type="text/javascript" src="js/component.js"></script>
+  	<script type="text/javascript">
 
-    <script type="text/template" id="modal">
-      <div>123</div>
-    </script>
-
-
-
-  	<script>
-
-        var app1 = new Vue({
-            el: '#app1',
-            data: {
-                show : true,
-                tipsShow : false,
-
-                account : '1',
-                password : '1'
-            },
-            watch : {
-            },
-            components: {
-                app1Modal:  modal
-            },
-            methods: {
-                nextButtonClick : function () {
-/*                    var app1ModalHook = this.$refs.app1ModalHook ;
-                    app1ModalHook.modalOpen();*/
-
-                    EventHub.$emit("modal");
+		var x1 = 'x1';
+		var x2 = 0;
+		var x3 = true;
+		var x4 = [1,2,3];
+		var x5 = { a : 1, b : 2 };
+		var x6;
+		var x7 = function(a,b,c) {
+			console.log("x7" + a + b + c );
+		};
 
 
-/*                    var app1Modal = this.$children[0];
-                    app1Modal.modalShow = true ;
+		console.log("*************************** 基础数据 *******************************");
 
-                    var app1Tips = this.$children[1];
-                    app1Tips.tipsOpen("???",2500);*/
+		console.log(typeof x1);
+		console.log(typeof x2);
+		console.log(typeof x3);
+		console.log(typeof x4);
+		console.log(typeof x5);
+		console.log(typeof x6);
+		console.log(typeof x7);
+		console.log(typeof (Object));
+		console.log(typeof (Array));
 
+		console.log("*************************** 构造函数 *********************************");
 
+		// 构造函数
+		function Person(name, sex, age) {
+			this.userName = name;
+			this.userSex = sex;
+			this.userAge = age;
 
-                }
-            },
-            mounted : function () {
-                var child = this.$children[0];
-                console.log("child %o" , child);
+			this.say = function (data) {
+				console.log("say :" + data);
+			}
+		}
+		// 构造函数、构造函数的 prototype
+		console.log("Person（构造函数 ）：%o" , Person);
+		console.log("Person.prototype（构造函数的prototype） ：%o" , Person.prototype);
 
-                var childRefs = this.$refs;
-                console.log("childRefs %o" , childRefs)
-            }
-        });
+		//实例对象 Person
+		var person = new Person(1,2,3);
+		//实例对象、 实力对象的 __proto__
+		console.log("person（实例对象）： %o" , person);
+		console.log("person.__proto__ （实例对象的__proto__）： %o" , person.__proto__);
+
+		//  Person.prototype === person1.__proto__ === person2.__proto__ === ...
+		// 也就是 实例对象.__proto__ === 构造器.prototype
+		console.log("Person.prototype === person.__proto__ ：", Person.prototype === person.__proto__ );
+
+		console.log("************************************************************");
+
+		var aa = function(name,sex,age) {
+			this.userName = name;
+			this.userSex = sex;
+			this.userAge = age;
+			console.log(this.userName + this.userSex + this.userAge);
+		};
+
+		var bb = {};
+
+	/*                console.log("aa.prototype : %o", aa.prototype);
+		console.log(bb.__proto__);*/
+
+		console.log("************************************************************");
+
+		Person.prototype.sing = function(data) {
+			console.log("构造函数Person sing :" + data)
+		};
+
+		Object.prototype.walk = function(data) {
+			console.log("顶级对象Object walk :" + data)
+		};
+
+		Function.prototype.run = function(data) {
+			console.log("顶级函数Function run :" + data)
+		};
+
 
 	</script>
   </body>
