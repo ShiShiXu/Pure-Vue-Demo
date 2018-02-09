@@ -18,7 +18,8 @@ Vue.component('modal', {
                             '<div> {{ modalMsg }} </div>'+
                         '</div>'+
                         '<div class="modal-footer">'+
-                            '<button id="app1-modal-btn" type="button" class="modal-button active" @click="modalButtonClick">确认</button>'+
+                            '<button id="app1-modal-btn" type="button" ' +
+                                'class="modal-button active" @click="modalButtonClick">确认</button>'+
                         '</div>'+
                     '</div>'+
                '</div>'
